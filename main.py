@@ -245,8 +245,8 @@ def main():
 
                 "confidence": confidence
             }
-
-            # Save everything
+            
+            Save everything
             save_results(results)
 
 if __name__ == "__main__":
