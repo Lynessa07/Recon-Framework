@@ -25,7 +25,7 @@ def fin_scan(target, ports):
         ) / TCP(
             sport=spoofed_source_port(),
             dport=port,
-            flags="S"
+            flags="F"
         )
 
         response = sr1(packet, timeout=1, verbose=0)

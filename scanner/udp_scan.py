@@ -34,7 +34,6 @@ def udp_scan(target, ports):
             verbose=0
         )
 
-        # No response = Open|Filtered
         if response is None:
 
             print(
@@ -43,7 +42,6 @@ def udp_scan(target, ports):
                 f"{service:<15}"
             )
 
-        # ICMP unreachable = Closed
         elif response.haslayer(ICMP):
 
             icmp_layer = response.getlayer(ICMP)
@@ -59,7 +57,6 @@ def udp_scan(target, ports):
                     f"{service:<15}"
                 )
 
-        # UDP response = Open
         else:
 
             print(

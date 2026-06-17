@@ -31,7 +31,6 @@ def parse_ports(port_input):
 
     ports = []
 
-    # Range
     if "-" in port_input:
 
         start, end = port_input.split("-")
@@ -43,7 +42,6 @@ def parse_ports(port_input):
             )
         )
 
-    # List
     elif "," in port_input:
 
         ports = [
@@ -51,7 +49,6 @@ def parse_ports(port_input):
             for port in port_input.split(",")
         ]
 
-    # Single port
     else:
 
         ports = [int(port_input)]

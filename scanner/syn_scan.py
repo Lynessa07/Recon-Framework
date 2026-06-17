@@ -64,8 +64,6 @@ def syn_scan(target, ports):
                         verbose=0
                         )
                     
-
-                # RST-ACK = Closed
                 elif response[TCP].flags == 0x14:
 
                     service = get_service_name(port)

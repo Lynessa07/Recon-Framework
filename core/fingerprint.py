@@ -49,14 +49,33 @@ def os_fingerprint(target):
 
     if not response:
         print("[-] No response received")
-        return
+        return {
+            "ttl": None,
+            "window_size": None,
+            "ttl_guess": "Unknown",
+            "window_guess": "Unknown",
+            "signature_guess": "Unknown",
+            "tcp_options": [],
+            "final_guess": "Unknown",
+        }
+
+    if not response.haslayer(TCP):
+        print("[-] Response has no TCP layer")
+        return {
+            "ttl": None,
+            "window_size": None,
+            "ttl_guess": "Unknown",
+            "window_guess": "Unknown",
+            "signature_guess": "Unknown",
+            "tcp_options": [],
+            "final_guess": "Unknown",
+        }
 
     if response.haslayer(TCP):
 
         ttl = response.ttl
         window = response[TCP].window
 
-        # TCP Signature Analysis
         options = response[TCP].options
 
         option_names = [
@@ -123,7 +142,6 @@ def os_fingerprint(target):
         print("\nFINAL OS GUESS")
         print("-" * 40)
 
-        # Confidence logic
         if (
             ttl_guess == window_guess
             or ttl_guess == signature_guess

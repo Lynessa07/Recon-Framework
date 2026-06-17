@@ -152,12 +152,10 @@ def main():
 
         # OS Fingerprinting
         os_results = os_fingerprint(target)
-
+        results["os_fingerprint"] = os_results
         final_os_guess = os_results["final_guess"]
 
         confidence = "Low"
-            
-
         results["os_fingerprint"] = os_results
 
         # Banner Grabbing
@@ -245,8 +243,6 @@ def main():
 
                 "confidence": confidence
             }
-            
-            Save everything
             save_results(results)
 
 if __name__ == "__main__":

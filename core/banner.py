@@ -11,8 +11,14 @@ def grab_banner(target, port):
 
         s.connect((target, port))
 
-        # HTTP-specific request
-        if port == 80 or port == 8080:
+        import ssl
+        if port == 443:
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+            s = ctx.wrap_socket(s, server_hostname=target)
+
+        if port in (80, 443, 8080, 8443):
 
             request = (
                 "GET / HTTP/1.1\r\n"
@@ -42,7 +48,7 @@ def analyze_banner(port, banner):
 
     banner_lower = banner.lower()
 
-    # HTTP FIRST
+    # HTTP
     if "http/" in banner_lower:
 
         if "apache" in banner_lower:
@@ -97,7 +103,6 @@ def service_detection(target, ports):
 
             version = "Unknown"
 
-            # Extract Apache/Nginx/IIS version
             if "Server:" in banner:
 
                 for line in banner.splitlines():
@@ -111,7 +116,6 @@ def service_detection(target, ports):
                             ).strip()
                         )
 
-            # Extract SSH version
             elif banner.startswith("SSH"):
 
                 version = banner.strip()
